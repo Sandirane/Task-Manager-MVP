@@ -3,7 +3,7 @@ const taskService = require("./task.service");
 
 const getTasks = async (req, res, next) => {
   try {
-    const tasks = await taskService.getAllTasks();
+    const tasks = await taskService.getAllTasks(req.user);
 
     res.json(tasks);
   } catch (error) {
@@ -13,7 +13,10 @@ const getTasks = async (req, res, next) => {
 
 const getTask = async (req, res, next) => {
   try {
-    const task = await taskService.getTaskById(req.params.id);
+    const task = await taskService.getTaskById(
+      req.params.id,
+      req.user
+    );
 
     if (!task) {
       return res.status(404).json({
@@ -27,23 +30,16 @@ const getTask = async (req, res, next) => {
   }
 };
 
-const fakeUser = {
-  id: "dev-user",
-  role: "admin",
-};
-
 const createTask = async (req, res, next) => {
   try {
-    const task = await taskService.createTask({
-      title: req.body.title,
-      description: req.body.description,
-      userId: fakeUser.id,
-    });
-    /*
     const validatedData = createTaskSchema.parse(req.body);
 
-    const task = await taskService.createTask(validatedData);
-    */
+    const task = await taskService.createTask({
+      ...validatedData,
+      userId: req.user.id,
+      //userId: req.user.sub,
+    });
+
     res.status(201).json(task);
   } catch (error) {
     next(error);
@@ -52,10 +48,12 @@ const createTask = async (req, res, next) => {
 
 const updateTask = async (req, res, next) => {
   try {
-    const validatedData = createTaskSchema.partial().parse(req.body);
+    const validatedData =
+      createTaskSchema.partial().parse(req.body);
 
     const task = await taskService.updateTask(
       req.params.id,
+      req.user,
       validatedData
     );
 
@@ -67,7 +65,10 @@ const updateTask = async (req, res, next) => {
 
 const deleteTask = async (req, res, next) => {
   try {
-    await taskService.deleteTask(req.params.id);
+    await taskService.deleteTask(
+      req.params.id,
+      req.user
+    );
 
     res.status(204).send();
   } catch (error) {

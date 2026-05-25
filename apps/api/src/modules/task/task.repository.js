@@ -1,4 +1,4 @@
-const prisma = require("../../prisma/prisma");
+const prisma = require("../../config/prisma");
 
 const findMany = async (filters = {}) => {
   return prisma.task.findMany({
@@ -9,9 +9,12 @@ const findMany = async (filters = {}) => {
   });
 };
 
-const findById = async (id) => {
-  return prisma.task.findUnique({
-    where: { id },
+const findById = async (id, userId) => {
+  return prisma.task.findFirst({
+    where: {
+      id,
+      userId,
+    },
   });
 };
 
@@ -21,16 +24,22 @@ const create = async (data) => {
   });
 };
 
-const update = async (id, data) => {
-  return prisma.task.update({
-    where: { id },
+const update = async (id, userId, data) => {
+  return prisma.task.updateMany({
+    where: {
+      id,
+      userId,
+    },
     data,
   });
 };
 
-const remove = async (id) => {
-  return prisma.task.delete({
-    where: { id },
+const remove = async (id, userId) => {
+  return prisma.task.deleteMany({
+    where: {
+      id,
+      userId,
+    },
   });
 };
 
