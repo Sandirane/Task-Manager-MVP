@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="navbar-collapse collapse" [class.show]="navbarCollapsed()" id="collapsibleNavbar">
+    <div class="container-fluid d-flex flex-row align-items-center">
+      <ul class="navbar-nav">
+        @for (action of actions; track action) {
+          <li class="nav-item">
+            <button
+              [class]="
+                action == currentAction ? 'btn btn-light ms-1' : 'btn btn-outline-light ms-1'
+              "
+              [routerLink]="action.route"
+            >
+              {{ action.title }} <i class="bi bi-{{ action.icon }}"></i>
+            </button>
+          </li>
+        }
+      </ul>
+
+      <div class="ms-auto">
+        <li>
+          <button class="btn btn-outline-danger nav-btn-fixed" (click)="logout()">
+            <i class="bi bi-arrow-right-square"></i>
+          </button>
+        </li>
+      </div>
+    </div>
+  </div>
+</nav>
