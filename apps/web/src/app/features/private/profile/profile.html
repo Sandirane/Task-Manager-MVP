@@ -1,63 +1,79 @@
-<div class="page-profile">
-  <div class="container">
-    <div class="row g-4">
-      <!-- Avatar -->
-      <div class="col-lg-4">
-        <div class="card shadow-sm h-100">
-          <div class="card-body text-center">
-            <div class="profile-avatar">
-              <i class="bi bi-person-vcard"></i>
+@if (auth.user(); as user) {
+  <div class="page-profile">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body text-center d-flex flex-column justify-content-center py-5">
+              <div class="profile-avatar mb-3">
+                <i class="bi bi-person-vcard"></i>
+              </div>
+              <h3 class="fw-bold mb-1 text-dark">{{ user.username }}</h3> 
             </div>
-
-            <h3 class="fw-bold mb-1">Username</h3>
-
-            <span class="badge text-bg-primary badge-role"> Role </span>
           </div>
         </div>
-      </div>
 
-      <!-- Informations -->
-      <div class="col-lg-8">
-        <div class="card shadow-sm h-100">
-          <div class="card-body">
-            <h4 class="fw-bold mb-4">Informations générales</h4>
+        <div class="col-lg-8">
+          <div class="card shadow-sm h-100 border-0">
+            <div class="card-body p-4 col-xl-10">
+              <h4 class="fw-bold mb-4 text-dark">Informations générales</h4>
 
-            <table class="table profile-info align-middle">
-              <tbody>
-                <tr>
-                  <th>Username</th>
-                  <td></td>
-                </tr>
+              <div class="profile-info-list">
+                <div class="info-item d-flex align-items-center py-3">
+                  <div class="info-icon-wrapper me-3">
+                    <i class="bi bi-person text-muted"></i>
+                  </div>
+                  <div>
+                    <span class="info-label text-muted d-block small">Prénom</span>
+                    <span class="info-value fw-medium text-dark">{{ user.firstName }}</span>
+                  </div>
+                </div>
 
-                <tr>
-                  <th>First name</th>
-                  <td></td>
-                </tr>
+                <div class="info-item d-flex align-items-center py-3">
+                  <div class="info-icon-wrapper me-3">
+                    <i class="bi bi-person-fill text-muted"></i>
+                  </div>
+                  <div>
+                    <span class="info-label text-muted d-block small">Nom</span>
+                    <span class="info-value fw-medium text-dark">{{ user.lastName }}</span>
+                  </div>
+                </div>
 
-                <tr>
-                  <th>Last name</th>
-                  <td></td>
-                </tr>
+                <div class="info-item d-flex align-items-center py-3">
+                  <div class="info-icon-wrapper me-3">
+                    <i class="bi bi-envelope text-muted"></i>
+                  </div>
+                  <div>
+                    <span class="info-label text-muted d-block small">Adresse email</span>
+                    <span class="info-value fw-medium text-dark">{{ user.email }}</span>
+                  </div>
+                </div>
 
-                <tr>
-                  <th>Email</th>
-                  <td></td>
-                </tr>
-
-                <tr>
-                  <th>Rôle</th>
-                  <td></td>
-                </tr>
-
-                <tr>
-                  <th>Identifiant / sub</th>
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
+                <div class="info-item d-flex align-items-start py-3">
+                  <div class="info-icon-wrapper me-3 mt-1">
+                    <i class="bi bi-shield-lock text-muted"></i>
+                  </div>
+                  <div>
+                    <span class="info-label text-muted d-block small mb-2"
+                      >Rôles / Permissions</span
+                    >
+                    <div class="d-flex flex-wrap gap-2">
+                      @for (role of user.roles; track role) {
+                        <span class="badge text-bg-primary badge-role">
+                          {{ role }}
+                        </span>
+                      } @empty {
+                        <span class="text-muted italic small">Aucun rôle assigné</span>
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        
       </div>
     </div>
   </div>
-</div>
+}

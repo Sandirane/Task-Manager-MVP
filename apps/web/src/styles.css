@@ -5,3 +5,13 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background-color: #f5f7fa !important;
 } 
+
+.card {
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+}
+ 

@@ -15,21 +15,33 @@ export interface MenuAction {
   styleUrl: './navbar-private.css',
 })
 export class NavbarPrivate {
-  navbarCollapsed = signal(false);
-  currentAction: MenuAction | null = null;
   protected auth = inject(AuthService);
 
-  toggleNavbar(): void {
-    this.navbarCollapsed.update((isCollapsed) => !isCollapsed);
-  }
+  navbarCollapsed = signal(false);
 
-  actions: Array<MenuAction> = [
-    { title: 'Acceuil', route: '/home', icon: "house" },
-    { title: 'Tâches', route: '/tasks', icon: "card-list" },
-    { title: 'Profile', route: '/profile', icon: "person" },
+  actions: MenuAction[] = [
+    {
+      title: 'Accueil',
+      route: '/home',
+      icon: 'house',
+    },
+    {
+      title: 'Tâches',
+      route: '/tasks',
+      icon: 'card-list',
+    },
+    {
+      title: 'Profil',
+      route: '/profile',
+      icon: 'person',
+    },
   ];
 
-  logout() {
+  toggleNavbar(): void {
+    this.navbarCollapsed.update((value) => !value);
+  }
+
+  logout(): void {
     this.auth.logout();
   }
 }

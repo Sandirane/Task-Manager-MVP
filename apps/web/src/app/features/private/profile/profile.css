@@ -1,74 +1,77 @@
 .page-profile {
-  padding: 2rem 0;
+  padding: 3rem 0;
+  background-color: #f8f9fa; 
 }
 
 .card {
-  border: none;
-  border-radius: 1rem;
-  overflow: hidden;
+  border-radius: 1.25rem;
+  background-color: #ffffff;
+}
+ 
+.col-lg-4 .card:hover {
+  transform: translateY(-2px);
   transition: transform .3s ease, box-shadow .3s ease;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.08);
-}
-
 .profile-avatar {
-  width: clamp(140px, 25vw, 220px);
-  height: clamp(140px, 25vw, 220px);
-  margin: 2rem auto;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto;
   border-radius: 50%;
-  background: linear-gradient(
-    135deg,
-    var(--bs-primary),
-    #6ea8fe
-  );
+  background: linear-gradient(135deg, var(--bs-primary), #6ea8fe);
   display: flex;
   align-items: center;
   justify-content: center; 
+  box-shadow: 0 8px 20px rgba(13, 110, 253, 0.15);
 }
 
 .profile-avatar i {
-  font-size: clamp(4rem, 10vw, 7rem);
+  font-size: 3.5rem;
   color: white;
 }
-
-@keyframes float {
-  0%,100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.profile-info th {
-  color: #6c757d;
-  font-weight: 600;
-  border: none;
-}
-
-.profile-info td {
-  border: none;
-}
-
-.profile-info tr:not(:last-child) {
+ 
+.info-item {
   border-bottom: 1px solid #f1f3f5;
 }
 
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  background-color: #f8f9fa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-icon-wrapper i {
+  font-size: 1.2rem;
+}
+
+.info-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-value {
+  font-size: 1.05rem;
+}
+ 
 .badge-role {
-  font-size: .9rem;
-  padding: .5rem .9rem;
+  font-size: .85rem;
+  padding: .4rem .8rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
 }
 
 @media (max-width: 991px) {
-  .profile-avatar {
-    margin: 1.5rem auto;
-  }
-
-  .profile-details {
-    margin-top: 1rem;
+  .page-profile {
+    padding: 1.5rem 0;
   }
 }

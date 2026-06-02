@@ -3,29 +3,36 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="navbar-collapse collapse" [class.show]="navbarCollapsed()" id="collapsibleNavbar">
-    <div class="container-fluid d-flex flex-row align-items-center">
+  <div class="navbar-collapse collapse" [class.show]="navbarCollapsed()">
+    <div class="container-fluid d-flex align-items-center">
       <ul class="navbar-nav">
-        @for (action of actions; track action) {
+        @for (action of actions; track action.route) {
           <li class="nav-item">
-            <button
-              [class]="
-                action == currentAction ? 'btn btn-light ms-1' : 'btn btn-outline-light ms-1'
-              "
+            <a
+              class="btn btn-outline-light ms-1"
               [routerLink]="action.route"
+              routerLinkActive="btn-light text-dark"
             >
-              {{ action.title }} <i class="bi bi-{{ action.icon }}"></i>
-            </button>
+              {{ action.title }}
+              <i class="bi bi-{{ action.icon }}"></i>
+            </a>
+          </li>
+        }
+
+        @if (auth.user()?.isAdmin) {
+          <li class="nav-item">
+            <a class="btn btn-secondary ms-1" routerLink="/admin" routerLinkActive="btn-light">
+              Administration
+              <i class="bi bi-shield-lock"></i>
+            </a>
           </li>
         }
       </ul>
 
       <div class="ms-auto">
-        <li>
-          <button class="btn btn-outline-danger nav-btn-fixed" (click)="logout()">
-            <i class="bi bi-arrow-right-square"></i>
-          </button>
-        </li>
+        <button class="btn btn-outline-danger" (click)="logout()">
+          <i class="bi bi-arrow-right-square"></i>
+        </button>
       </div>
     </div>
   </div>
