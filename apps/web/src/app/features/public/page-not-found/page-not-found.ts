@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ErrorPage } from '@shared/ui/error-page/error-page';
 
 @Component({
   selector: 'app-page-not-found',
-  imports: [RouterLink],
-  templateUrl: './page-not-found.html',
-  styleUrl: './page-not-found.css',
+  imports: [ErrorPage],
+  template: `
+    <app-error-page
+      code="404"
+      title="Page introuvable"
+      message="La page que vous recherchez n'existe pas ou a été déplacée."
+      icon="compass"
+      color="warning"
+    />
+  `,
 })
-export class PageNotFound {
-
-}
+export class PageNotFound {}

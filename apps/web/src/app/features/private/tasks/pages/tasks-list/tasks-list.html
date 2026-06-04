@@ -1,0 +1,20 @@
+<div class="container mt-4">
+  <h2>Mes tâches</h2>
+  <hr />
+
+  @if (tasksResource.isLoading()) {
+    <div class="spinner-grow text-dark"></div>
+  } @else {
+    @for (task of tasksResource.value(); track task.id) {
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ task.title }}</h5>
+          <p class="card-text">{{ task.description }}</p>
+          <span class="badge text-bg-primary">{{ task.status }}</span>
+        </div>
+      </div>
+    } @empty {
+      <div class="alert alert-info">Aucune tâche trouvée.</div>
+    }
+  }
+</div>

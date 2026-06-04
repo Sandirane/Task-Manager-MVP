@@ -6,19 +6,29 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () => import('./features/public/home/home').then((m) => m.Home),
   },
-
   {
-    path: 'profile',
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
     canActivate: [authGuard],
-    loadComponent: () => import('./features/private/profile/profile').then((m) => m.Profile),
+    loadChildren: () => import('./features/private/private.routes').then((m) => m.PRIVATE_ROUTES),
   },
 
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {
+    path: 'unauthorized',
+    loadComponent: () =>
+      import('./features/public/unauthorized/unauthorized').then((m) => m.Unauthorized),
+  },
+
   {
     path: 'not-authorized',
     loadComponent: () =>
       import('./features/public/not-authorized/not-authorized').then((m) => m.NotAuthorized),
   },
+
   {
     path: '**',
     loadComponent: () =>

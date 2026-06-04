@@ -1,11 +1,14 @@
 <div class="d-flex flex-column min-vh-100">
+  
   @if (!auth.isAuthenticated()) {
     <app-navbar />
-  }
-
-  @if (auth.isAuthenticated()) {
+  } @else {
     <app-navbar-private />
   }
+
+  <app-alert />
+  <app-spinner />
+
   <main class="flex-grow-1">
     <router-outlet />
   </main>

@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { ErrorPage } from '@shared/ui/error-page/error-page';
 
 @Component({
-  selector: 'app-not-authorized',
+  selector: 'app-unauthorized',
   imports: [ErrorPage],
   template: `
     <app-error-page
-      code="403"
+      code="401"
       title="Accès refusé"
-      message="Vous n'avez pas les droits."
+      message="Session expiré veuillez vous reconnecter."
       icon="compass"
-      color="danger"
+      color="warning"
     />
   `,
 })
-export class NotAuthorized {}
+export class Unauthorized {}

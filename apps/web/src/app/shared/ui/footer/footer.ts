@@ -3,9 +3,10 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-footer',
   imports: [],
-  templateUrl: './footer.html',
-  styleUrl: './footer.css',
+  template: `
+    <footer class="p-2 text-white bg-dark">
+      <small>2026 TASK-MANAGER</small>
+    </footer>
+  `,
 })
-export class Footer {
-
-}
+export class Footer {}

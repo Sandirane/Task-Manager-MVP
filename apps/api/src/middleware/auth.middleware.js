@@ -45,8 +45,14 @@ const authMiddleware = (req, res, next) => {
       },
       (err, decoded) => {
         if (err) {
-          return res.status(403).json({
+          return res.status(401).json({
             message: "Invalid or expired token",
+          });
+        }
+
+        if (err) {
+          return res.status(403).json({
+            message: "You are not authorized",
           });
         }
 
