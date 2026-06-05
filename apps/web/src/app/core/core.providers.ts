@@ -3,7 +3,7 @@ import {
   provideAppInitializer,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { routes } from '../app.routes';
@@ -15,7 +15,7 @@ import { loadingInterceptor } from './interceptors/loading-interceptor-intercept
 
 export const coreProviders: ApplicationConfig['providers'] = [
   provideBrowserGlobalErrorListeners(),
-  provideRouter(routes),
+  provideRouter(routes, withComponentInputBinding()),
   provideAppInitializer(() => initializeKeycloak()),
   provideHttpClient(
     withInterceptors([

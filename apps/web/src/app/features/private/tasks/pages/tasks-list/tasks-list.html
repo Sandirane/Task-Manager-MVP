@@ -1,7 +1,9 @@
 <div class="container mt-4">
   <h2>Mes tâches</h2>
-  <hr />
 
+  <hr />
+  <button type="button" [routerLink]="['/tasks/new']" class="btn btn-primary">Ajouter</button>
+  <hr />
   @if (tasksResource.isLoading()) {
     <div class="spinner-grow text-dark"></div>
   } @else {
@@ -11,6 +13,11 @@
           <h5 class="card-title">{{ task.title }}</h5>
           <p class="card-text">{{ task.description }}</p>
           <span class="badge text-bg-primary">{{ task.status }}</span>
+          <hr />
+          <button class="btn btn-warning" [routerLink]="['/tasks', task.id, 'edit']">
+            Modifier
+          </button>
+          <button class="btn btn-danger" (click)="deleteTask(task.id)">Supprimer</button>
         </div>
       </div>
     } @empty {

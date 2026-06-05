@@ -1,1 +1,13 @@
-<p>task-detail works!</p>
+@if (taskResource.value(); as task) {
+  <div class="container mt-4">
+    <h2>{{ task.title }}</h2>
+
+    <hr />
+
+    <p>{{ task.description }}</p>
+
+    <span class="badge text-bg-primary">
+      {{ task.status }}
+    </span>
+  </div>
+}

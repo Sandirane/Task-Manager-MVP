@@ -1,64 +1,50 @@
-import { Injectable, signal } from '@angular/core';
-import { User } from '@core/models/user';
+import { computed, Injectable, signal } from '@angular/core';
 import { keycloak } from './keycloak.config';
 import { KeycloakTokenParsed } from '@core/models/keycloak-token.model';
+import { User } from '@core/models/user';
+import { environment } from '@config/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  readonly user = signal<User | null>(null);
+  private readonly _user = signal<User | null>(this.getInitialUser());
 
-  constructor() {
-    this.syncUser();
-  }
+  readonly user = this._user.asReadonly();
+
+  readonly isAuthenticated = computed(() => !!this._user());
+  readonly isAdmin = computed(() => this._user()?.isAdmin ?? false);
 
   async login(): Promise<void> {
     await keycloak.login();
   }
 
   async logout(): Promise<void> {
-    this.user.set(null);
-
+    this._user.set(null);
     await keycloak.logout({
       redirectUri: window.location.origin,
     });
-  }
-
-  isAuthenticated(): boolean {
-    return !!keycloak.authenticated;
   }
 
   getToken(): string | undefined {
     return keycloak.token;
   }
 
-  getUser(): User | null {
-    return this.user();
-  }
-
   hasRole(role: string): boolean {
-    return this.user()?.roles.includes(role) ?? false;
+    return this._user()?.roles.includes(role) ?? false;
   }
 
-  private syncUser(): void {
-    if (!keycloak.authenticated) {
-      this.user.set(null);
-      return;
-    }
-
-    this.loadUser();
-  }
-
-  private loadUser(): void {
-    if (!keycloak.tokenParsed) {
-      return;
+  private getInitialUser(): User | null {
+    if (!keycloak.authenticated || !keycloak.tokenParsed) {
+      return null;
     }
 
     const token = keycloak.tokenParsed as KeycloakTokenParsed;
-    const roles = token.resource_access?.['task-manager-api']?.roles ?? [];
+    const clientId = environment.keycloak.clientId;
+    const roles =
+      token.resource_access?.[clientId as keyof typeof token.resource_access]?.roles ?? [];
 
-    this.user.set({
+    return {
       id: token.sub ?? '',
       username: token.preferred_username ?? '',
       email: token.email ?? '',
@@ -66,6 +52,6 @@ export class AuthService {
       lastName: token.family_name ?? '',
       roles,
       isAdmin: roles.includes('admin'),
-    });
+    };
   }
 }

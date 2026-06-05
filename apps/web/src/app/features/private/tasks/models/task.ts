@@ -1,4 +1,4 @@
-export type TaskStatus = 'TODO' | 'IN_PROGRESS' | 'DONE';
+import { TaskStatus } from './task-status.enum';
 
 export interface Task {
   id: string;
