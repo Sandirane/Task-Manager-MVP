@@ -1,27 +1,85 @@
-<div class="container mt-4">
-  <h2>Mes tâches</h2>
+<nav class="topbar py-3 mb-4">
+  <div class="container d-flex justify-content-between align-items-center">
+    <h4 class="mb-0 fw-bold">Mes tâches</h4>
 
-  <hr />
-  <button type="button" [routerLink]="['/tasks/new']" class="btn btn-primary">Ajouter</button>
-  <hr />
-  @if (tasksResource.isLoading()) {
-    <div class="spinner-grow text-dark"></div>
-  } @else {
-    @for (task of tasksResource.value(); track task.id) {
-      <div class="card mb-3">
-        <div class="card-body">
-          <h5 class="card-title">{{ task.title }}</h5>
-          <p class="card-text">{{ task.description }}</p>
-          <span class="badge text-bg-primary">{{ task.status }}</span>
-          <hr />
-          <button class="btn btn-warning" [routerLink]="['/tasks', task.id, 'edit']">
-            Modifier
-          </button>
-          <button class="btn btn-danger" (click)="deleteTask(task.id)">Supprimer</button>
+    <button class="btn btn-primary btn-add" [routerLink]="['/tasks/new']">+ Nouvelle tâche</button>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row g-4 mb-4">
+    <div class="col-md-4">
+      <div class="card stat-card p-4">
+        <div class="text-muted mb-2">Total tâches</div>
+
+        <div class="stat-number">
+          {{ tasksResource.value()?.length || 0 }}
         </div>
       </div>
-    } @empty {
-      <div class="alert alert-info">Aucune tâche trouvée.</div>
-    }
-  }
+    </div>
+
+    <div class="col-md-4">
+      <div class="card stat-card p-4">
+        <div class="text-muted mb-2">Affichées</div>
+
+        <div class="stat-number text-primary">
+          {{ filteredTasks().length }}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card stat-card p-4">
+        <div class="text-muted mb-2">Page actuelle</div>
+
+        <div class="stat-number text-success">
+          {{ page() }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card table-card mb-5">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center gap-2">
+          <h5 class="mb-0">Liste des tâches</h5>
+          |
+
+          <button class="btn btn-outline-secondary btn-sm" (click)="toggleSort()">
+            {{ sortDirection() === 'asc' ? 'A-Z' : 'Z-A' }}
+          </button>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <app-task-search (search)="onSearch($event)" />
+          <select class="form-select" style="width: 100px" (change)="changePageSize($event)">
+            <option value="3">3</option>
+            <option value="5" selected>5</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+      </div>
+
+      @if (tasksResource.isLoading()) {
+        <div class="text-center py-5">
+          <div class="spinner-border"></div>
+        </div>
+      } @else {
+        @if (tasksResource.value()?.length) {
+          <app-task-table [tasks]="paginatedTasks()" (delete)="deleteTask($event)" />
+
+          <div class="mt-4">
+            <app-task-pagination
+              [page]="page()"
+              [totalPages]="totalPages()"
+              (previous)="previousPage()"
+              (next)="nextPage()"
+            />
+          </div>
+        } @else {
+          <div class="alert alert-info">Aucune tâche trouvée.</div>
+        }
+      }
+    </div>
+  </div>
 </div>

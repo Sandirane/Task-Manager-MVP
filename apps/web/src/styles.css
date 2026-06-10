@@ -1,17 +1,93 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --bg-color: #f5f7fa;
+  --card-radius: 18px;
+}
+
 body {
-    font-family: var(--font-family);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    background-color: #f5f7fa !important;
-} 
+  background: var(--bg-color) !important;
+  font-family: Inter, Segoe UI, sans-serif;
+  min-height: 100vh;
+}
+
+/* TOPBAR */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  background: rgba(255, 255, 255, .75);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border-bottom: 1px solid rgba(0, 0, 0, .05);
+}
+
+/* CARDS */
 
 .card {
-    transition: transform .2s ease, box-shadow .2s ease;
+  border: none;
+  border-radius: var(--card-radius);
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, .04),
+    0 8px 24px rgba(0, 0, 0, .05);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
 }
 
 .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, .08),
+    0 16px 32px rgba(0, 0, 0, .08);
 }
- 
+
+/* STATS */
+
+.stat-card {
+  background: white;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* TABLE */
+
+.task-table th {
+  font-weight: 600;
+  color: #6c757d;
+}
+
+.task-table td {
+  vertical-align: middle;
+}
+
+.table-card {
+  overflow: hidden;
+}
+
+/* BUTTONS */
+
+.btn-add {
+  border-radius: 12px;
+  padding: .7rem 1.2rem;
+}
+
+/* PAGINATION */
+
+.pagination .page-link {
+  border-radius: 10px;
+}
+
+/* SEARCH */
+
+input.form-control {
+  border-radius: 12px;
+}

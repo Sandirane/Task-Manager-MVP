@@ -44,6 +44,10 @@ export class TaskForm {
     }
   });
 
+  cancel() {
+    this.router.navigate(['/tasks']);
+  }
+
   save() {
     if (this.form.invalid) return;
 
