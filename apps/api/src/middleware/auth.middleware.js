@@ -56,7 +56,7 @@ const authMiddleware = (req, res, next) => {
           });
         }
 
-        req.user = {
+        req.user = { 
           id: decoded.sub,
           email: decoded.email,
           username: decoded.preferred_username,

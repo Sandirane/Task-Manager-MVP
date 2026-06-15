@@ -1,11 +1,12 @@
 import { Component, input, output } from '@angular/core';
 import { Task } from '../../models/task';
 import { RouterLink } from '@angular/router';
-import { TaskStatus } from '../../models/task-status.enum';
+import { TaskStatus, TaskPriority } from '../../models/task-enum';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-task-table',
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe],
   templateUrl: './task-table.html',
   styleUrl: './task-table.css',
 })
@@ -24,6 +25,22 @@ export class TaskTable {
 
       case TaskStatus.DONE:
         return 'text-bg-success';
+
+      default:
+        return 'text-bg-primary';
+    }
+  }
+
+  priorityClass(priority: TaskPriority): string {
+    switch (priority) {
+      case TaskPriority.LOW:
+        return 'text-bg-secondary';
+
+      case TaskPriority.MEDIUM:
+        return 'text-bg-warning';
+
+      case TaskPriority.HIGH:
+        return 'text-bg-danger';
 
       default:
         return 'text-bg-primary';

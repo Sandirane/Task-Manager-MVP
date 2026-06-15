@@ -25,20 +25,40 @@ const create = async (data) => {
 };
 
 const update = async (id, userId, data) => {
-  return prisma.task.updateMany({
+  const task = await prisma.task.findFirst({
     where: {
       id,
       userId,
+    },
+  });
+
+  if (!task) {
+    return null;
+  }
+
+  return prisma.task.update({
+    where: {
+      id,
     },
     data,
   });
 };
 
 const remove = async (id, userId) => {
-  return prisma.task.deleteMany({
+  const task = await prisma.task.findFirst({
     where: {
       id,
       userId,
+    },
+  });
+
+  if (!task) {
+    return null;
+  }
+
+  return prisma.task.delete({
+    where: {
+      id,
     },
   });
 };

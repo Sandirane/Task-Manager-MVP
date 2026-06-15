@@ -9,5 +9,9 @@ export const PRIVATE_ROUTES: Routes = [
   {
     path: 'profile',
     loadComponent: () => import('./profile/profile').then((m) => m.Profile),
-  },
+  },/*
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/profile.routes').then((m) => m.ADMIN_ROUTES),
+  },*/
 ];

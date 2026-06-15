@@ -14,10 +14,16 @@
       <label>Titre</label>
       <input class="form-control" formControlName="title" />
     </div>
-
+    @if (form.get('title')?.invalid && form.get('title')?.touched) {
+      <small class="text-danger">Titre obligatoire</small>
+    }
     <div class="mb-3">
       <label>Description</label>
       <textarea class="form-control" rows="5" formControlName="description"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <input type="date" class="form-control" formControlName="dueDate" />
     </div>
 
     <div class="mb-3">
@@ -29,7 +35,16 @@
       </select>
     </div>
 
+    <div class="mb-3">
+      <label>Priorité</label>
+      <select class="form-select" formControlName="priority">
+        @for (priority of priorityOptions; track priority) {
+          <option [value]="priority">{{ priority }}</option>
+        }
+      </select>
+    </div>
+
     <button class="btn btn-outline-primary" type="submit">Enregistrer</button>
-    <button class="btn btn-outline-danger ms-2" (click)="cancel()">Annuler</button>
+    <button class="btn btn-outline-danger ms-2" type="button" (click)="cancel()">Annuler</button>
   </form>
 </div>

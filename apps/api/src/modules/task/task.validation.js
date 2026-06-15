@@ -6,10 +6,18 @@ const taskStatusEnum = z.enum([
     "DONE",
 ]);
 
+const priorityEnum = z.enum([
+    'LOW',
+    'MEDIUM',
+    'HIGH',
+]);
+
 const createTaskSchema = z.object({
     title: z.string().min(1, "Title is required"),
     description: z.string().optional(),
-    status: taskStatusEnum.optional(),
+    status: taskStatusEnum.default("TODO"),
+    priority: priorityEnum.default("LOW"),
+    dueDate: z.string().datetime().optional(),
 });
 
 module.exports = {

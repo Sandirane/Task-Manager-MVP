@@ -6,8 +6,12 @@ import { AlertService } from '@core/services/alert.service';
   imports: [],
   template: `
     @if (alertService.alert(); as alert) {
-      <div class="alert alert-{{ alert.type }} m-3" role="alert">
-        {{ alert.message }}
+      <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1100">
+        <div class="toast show text-bg-{{ alert.type }}">
+          <div class="toast-body">
+            {{ alert.message }}
+          </div>
+        </div>
       </div>
     }
   `,

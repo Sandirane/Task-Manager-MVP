@@ -6,10 +6,12 @@ import { SpinnerService } from '@core/services/spinner.service';
   imports: [],
   template: `
     @if (spinner.loading()) {
-      <button class="btn btn-primary" disabled>
-        <span class="spinner-grow spinner-grow-sm"></span>
-        Loading..
-      </button>
+      <div class="spinner-overlay">
+        <div class="spinner-card">
+          <div class="spinner-border text-primary" role="status"></div> 
+          <span>Chargement...</span>
+        </div>
+      </div>
     }
   `,
 })

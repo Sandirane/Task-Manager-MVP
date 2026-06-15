@@ -2,7 +2,7 @@ const repository = require("./task.repository");
 
 const getAllTasks = async (user) => {
   return repository.findMany({
-    userId: user.sub,
+    userId: user.id,
   });
 };
 
