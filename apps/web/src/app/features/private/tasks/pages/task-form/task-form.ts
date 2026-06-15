@@ -6,6 +6,7 @@ import { TaskPriority, TaskStatus } from '../../models/task-enum';
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 import { switchMap, of } from 'rxjs';
 import { AlertService } from '@core/services/alert.service';
+import { TaskStateService } from '../../services/task-state.service';
 
 @Component({
   selector: 'app-task-form',
@@ -18,6 +19,7 @@ export class TaskForm {
   private tasksService = inject(TasksService);
   private router = inject(Router);
   private alertService = inject(AlertService);
+    readonly state = inject(TaskStateService);
 
   id = input<string | null>(null);
   protected readonly statusOptions = Object.values(TaskStatus);
@@ -72,6 +74,7 @@ export class TaskForm {
     request$.subscribe({
       next: () => {
         this.alertService.show(successMessage, 'success');
+        this.state.reload();
         this.router.navigate(['/tasks']);
       },
       error: () => {

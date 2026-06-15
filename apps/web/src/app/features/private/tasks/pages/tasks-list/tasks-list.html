@@ -1,77 +1,27 @@
 <nav class="topbar py-3 mb-4">
   <div class="container d-flex justify-content-between align-items-center">
     <h4 class="mb-0 fw-bold">Mes tâches</h4>
-
     <button class="btn btn-primary btn-add" [routerLink]="['/tasks/new']">+ Nouvelle tâche</button>
   </div>
 </nav>
 
 <div class="container">
-  <div class="row g-4 mb-4">
-    <div class="col-md-4">
-      <div class="card stat-card p-4">
-        <div class="text-muted mb-2">Total tâches</div>
-
-        <div class="stat-number">
-          {{ tasksResource.value()?.length || 0 }}
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card stat-card p-4">
-        <div class="text-muted mb-2">Affichées</div>
-
-        <div class="stat-number text-primary">
-          {{ filteredTasks().length }}
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card stat-card p-4">
-        <div class="text-muted mb-2">Page actuelle</div>
-
-        <div class="stat-number text-success">
-          {{ page() }}
-        </div>
-      </div>
-    </div>
-  </div>
+  <app-task-stats
+    [totalTasks]="state.tasksResource.value()?.length || 0"
+    [displayedTasks]="state.filteredTasks().length"
+    [currentPage]="state.page()"
+  />
 
   <div class="card table-card mb-5">
     <div class="card-body">
       <div class="row g-3 align-items-center mb-4">
-        <div class="col-12 col-lg-7">
-          <div class="d-flex flex-wrap align-items-center gap-2">
-            <h5 class="mb-0 me-2">Liste des tâches</h5>
-
-            <button class="btn btn-outline-secondary btn-sm" (click)="toggleSort()">
-              {{ sortDirection() === 'asc' ? 'A-Z' : 'Z-A' }}
-            </button>
-
-            <select class="form-select" (change)="changeStatusFilter($event)">
-              <option value="">Tous les status</option>
-              <option value="TODO">TODO</option>
-              <option value="IN_PROGRESS">IN_PROGRESS</option>
-              <option value="DONE">DONE</option>
-            </select>
-
-            <select class="form-select" (change)="changePriorityFilter($event)">
-              <option value="">Toutes les priorités</option>
-              <option value="LOW">LOW</option>
-              <option value="MEDIUM">MEDIUM</option>
-              <option value="HIGH">HIGH</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="col-12 col-lg-5">
+        <div class="col-12 col-lg-6">
           <div
             class="d-flex flex-column flex-md-row justify-content-lg-end align-items-stretch align-items-md-center gap-2"
           >
+            <h5 class="mb-0 me-2">Liste des tâches</h5>
             <div class="flex-grow-1">
-              <app-task-search (search)="onSearch($event)"></app-task-search>
+              <app-task-search (search)="state.setSearch($event)" />
             </div>
 
             <select class="form-select" style="max-width: 120px" (change)="changePageSize($event)">
@@ -81,22 +31,31 @@
             </select>
           </div>
         </div>
+
+        <div class="col-12 col-lg-6">
+          <app-task-filters
+            [sortDirection]="state.sortDirection()"
+            (toggleSort)="state.toggleSort()"
+            (statusChange)="state.setStatusFilter($event)"
+            (priorityChange)="state.setPriorityFilter($event)"
+          />
+        </div>
       </div>
 
-      @if (tasksResource.isLoading()) {
+      @if (state.tasksResource.isLoading()) {
         <div class="text-center py-5">
           <div class="spinner-border"></div>
         </div>
       } @else {
-        @if (tasksResource.value()?.length) {
-          <app-task-table [tasks]="paginatedTasks()" (delete)="deleteTask($event)" />
+        @if (state.tasksResource.value()?.length) {
+          <app-task-table [tasks]="state.paginatedTasks()" (delete)="deleteTask($event)" />
 
           <div class="mt-4">
             <app-task-pagination
-              [page]="page()"
-              [totalPages]="totalPages()"
-              (previous)="previousPage()"
-              (next)="nextPage()"
+              [page]="state.page()"
+              [totalPages]="state.totalPages()"
+              (previous)="state.previousPage()"
+              (next)="state.nextPage()"
             />
           </div>
         } @else {
