@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { adminGuard } from '@core/guards/admin-guard';
 
 export const PRIVATE_ROUTES: Routes = [
   {
@@ -9,9 +10,10 @@ export const PRIVATE_ROUTES: Routes = [
   {
     path: 'profile',
     loadComponent: () => import('./profile/profile').then((m) => m.Profile),
-  },/*
+  },
   {
     path: 'admin',
-    loadChildren: () => import('./admin/profile.routes').then((m) => m.ADMIN_ROUTES),
-  },*/
+    canActivate: [adminGuard],
+    loadChildren: () => import('./admin/pages/admin.routes').then((m) => m.ADMIN_ROUTES),
+  },
 ];

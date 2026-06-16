@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const taskRoutes = require("./modules/task/task.routes");
+const adminRoutes = require("./modules/admin/admin.routes");
 const errorMiddleware = require("./middleware/error.middleware");
 
 const app = express();
@@ -14,6 +15,7 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/tasks", taskRoutes);
+app.use("/admin", adminRoutes);
 app.use(errorMiddleware);
 
 module.exports = app;

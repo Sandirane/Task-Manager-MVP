@@ -9,6 +9,7 @@ import { TasksService } from './tasks.service';
   providedIn: 'root',
 })
 export class TaskStateService {
+  
   private tasksService = inject(TasksService);
   private alertService = inject(AlertService);
 
@@ -108,6 +109,14 @@ export class TaskStateService {
     if (page >= 1 && page <= this.totalPages()) {
       this.page.set(page);
     }
+  }
+
+  goToFirstPage(): void {
+    this.page.set(1);
+  }
+
+  goToLastPage(): void {
+    this.page.set(this.totalPages());
   }
 
   deleteTask(id: string) {

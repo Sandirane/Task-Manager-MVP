@@ -14,7 +14,7 @@ import { Component, input } from '@angular/core';
 
       <div class="col-md-4">
         <div class="card stat-card p-4">
-          <div class="text-muted mb-2">Affichées</div>
+          <div class="text-muted mb-2">Total affiché après filtrage</div>
           <div class="stat-number text-primary">{{ displayedTasks() }}</div>
         </div>
       </div>

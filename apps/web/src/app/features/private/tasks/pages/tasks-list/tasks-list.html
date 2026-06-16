@@ -12,54 +12,85 @@
     [currentPage]="state.page()"
   />
 
-  <div class="card table-card mb-5">
-    <div class="card-body">
+  <div class="card table-card border-0 shadow-sm mb-5">
+    <div class="card-body p-4">
       <div class="row g-3 align-items-center mb-4">
-        <div class="col-12 col-lg-6">
-          <div
-            class="d-flex flex-column flex-md-row justify-content-lg-end align-items-stretch align-items-md-center gap-2"
-          >
-            <h5 class="mb-0 me-2">Liste des tâches</h5>
-            <div class="flex-grow-1">
+        <div class="col-12 col-xl-7">
+          <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-3">
+            <h5 class="mb-0 fw-bold text-dark text-nowrap">Liste des tâches</h5>
+
+            <div class="flex-grow-1 w-100">
               <app-task-search (search)="state.setSearch($event)" />
             </div>
 
-            <select class="form-select" style="max-width: 120px" (change)="changePageSize($event)">
-              <option value="3" selected>3</option>
-              <option value="5">5</option>
-              <option value="10">10</option>
+            <select
+              class="form-select form-select-sm shadow-sm"
+              style="max-width: 90px; height: 38px"
+              (change)="changePageSize($event)"
+            >
+              @for (size of pageSizeOptions; track size) {
+                <option [value]="size" [selected]="size === defaultPageSize">
+                  {{ size }}
+                </option>
+              }
             </select>
           </div>
         </div>
 
-        <div class="col-12 col-lg-6">
-          <app-task-filters
-            [sortDirection]="state.sortDirection()"
-            (toggleSort)="state.toggleSort()"
-            (statusChange)="state.setStatusFilter($event)"
-            (priorityChange)="state.setPriorityFilter($event)"
-          />
+        <div class="col-12 col-xl-5 d-flex justify-content-xl-end">
+          <div class="w-100 style-filters">
+            <app-task-filters
+              [sortDirection]="state.sortDirection()"
+              (toggleSort)="state.toggleSort()"
+              (statusChange)="state.setStatusFilter($event)"
+              (priorityChange)="state.setPriorityFilter($event)"
+            />
+          </div>
         </div>
       </div>
 
+      <hr class="text-muted opacity-10 mb-4" />
       @if (state.tasksResource.isLoading()) {
         <div class="text-center py-5">
-          <div class="spinner-border"></div>
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Chargement...</span>
+          </div>
         </div>
       } @else {
         @if (state.tasksResource.value()?.length) {
-          <app-task-table [tasks]="state.paginatedTasks()" (delete)="deleteTask($event)" />
+          <div class="table-responsive">
+            <app-task-table
+              [tasks]="state.paginatedTasks()"
+              (delete)="openDeleteConfirmation($event)"
+            />
 
-          <div class="mt-4">
+            <app-confirm-modal
+              [isOpen]="isModalOpen()"
+              title="Supprimer la tâche"
+              message="Attention, cette action est irréversible. 
+              Êtes-vous sûr de vouloir supprimer cette tâche ?"
+              (confirm)="confirmDelete()"
+              (cancel)="closeModal()"
+            />
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-4">
+            <span class="text-muted small"
+              >Page {{ state.page() }} sur {{ state.totalPages() }}</span
+            >
             <app-task-pagination
               [page]="state.page()"
               [totalPages]="state.totalPages()"
               (previous)="state.previousPage()"
               (next)="state.nextPage()"
+              (first)="state.goToFirstPage()"
+              (last)="state.goToLastPage()"
             />
           </div>
         } @else {
-          <div class="alert alert-info">Aucune tâche trouvée.</div>
+          <div class="text-center py-4">
+            <div class="alert alert-info d-inline-block px-5 shadow-sm">Aucune tâche trouvée.</div>
+          </div>
         }
       }
     </div>

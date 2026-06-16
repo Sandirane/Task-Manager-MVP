@@ -7,7 +7,15 @@ const getAllTasks = async (user) => {
 };
 
 const getTaskById = async (id, user) => {
-  return repository.findById(id, user.id);
+  const task = await repository.findById(id, user.id);
+
+  if (!task) {
+    const error = new Error("Task not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  return task;
 };
 
 const createTask = async (data) => {
@@ -15,11 +23,27 @@ const createTask = async (data) => {
 };
 
 const updateTask = async (id, user, data) => {
-  return repository.update(id, user.id, data);
+  const task = await repository.update(id, user.id, data);
+
+  if (!task) {
+    const error = new Error("Task not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  return task;
 };
 
 const deleteTask = async (id, user) => {
-  return repository.remove(id, user.id);
+  const task = await repository.remove(id, user.id);
+
+  if (!task) {
+    const error = new Error("Task not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  return task;
 };
 
 module.exports = {

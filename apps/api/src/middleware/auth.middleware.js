@@ -2,8 +2,7 @@ const jwt = require("jsonwebtoken");
 const jwksClient = require("jwks-rsa");
 
 const client = jwksClient({
-  jwksUri:
-    "http://keycloak:8080/realms/task-manager/protocol/openid-connect/certs",
+  jwksUri: "http://keycloak:8080/realms/task-manager/protocol/openid-connect/certs",
 });
 
 function getKey(header, callback) {
@@ -12,9 +11,7 @@ function getKey(header, callback) {
       callback(err);
       return;
     }
-
     const signingKey = key.getPublicKey();
-
     callback(null, signingKey);
   });
 }
@@ -23,15 +20,9 @@ const authMiddleware = (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
 
-    if (!authHeader) {
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res.status(401).json({
-        message: "Missing authorization header",
-      });
-    }
-
-    if (!authHeader.startsWith("Bearer ")) {
-      return res.status(401).json({
-        message: "Invalid authorization format",
+        message: "Invalid or missing authorization header",
       });
     }
 
@@ -40,9 +31,7 @@ const authMiddleware = (req, res, next) => {
     jwt.verify(
       token,
       getKey,
-      {
-        algorithms: ["RS256"],
-      },
+      { algorithms: ["RS256"] },
       (err, decoded) => {
         if (err) {
           return res.status(401).json({
@@ -50,17 +39,18 @@ const authMiddleware = (req, res, next) => {
           });
         }
 
-        if (err) {
-          return res.status(403).json({
-            message: "You are not authorized",
-          });
-        }
+        const clientId = process.env.KEYCLOAK_CLIENT_ID;
+        const realmRoles = decoded.realm_access?.roles || [];
+        const clientRoles = clientId && decoded.resource_access?.[clientId]?.roles || [];
 
-        req.user = { 
+        const allRoles = [...realmRoles, ...clientRoles];
+        
+        console.log("Rôles extraits du token :", allRoles);
+        req.user = {
           id: decoded.sub,
           email: decoded.email,
           username: decoded.preferred_username,
-          roles: decoded.realm_access?.roles || [],
+          roles: allRoles,
         };
 
         next();

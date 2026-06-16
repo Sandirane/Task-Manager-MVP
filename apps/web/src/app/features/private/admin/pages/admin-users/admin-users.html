@@ -1,0 +1,52 @@
+<div class="container mt-4">
+  <h2>Utilisateurs</h2>
+  <hr />
+
+  <input class="form-control mb-4" placeholder="Rechercher..." (input)="onSearch($event)" />
+
+  @if (usersResource.isLoading()) {
+    <div class="text-center my-4">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p>Chargement des utilisateurs Keycloak...</p>
+    </div>
+  } @else if (usersResource.error()) {
+    <div class="alert alert-danger" role="alert">
+      <strong>Erreur :</strong> Impossible de récupérer les utilisateurs. Vérifiez vos droits d'accès ou l'URL de l'API.
+    </div>
+  } @else {
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Nom</th>
+          <th>Rôles</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (user of filteredUsers(); track user.id) {
+          <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.firstName }} {{ user.lastName }}</td>
+            <td>
+              @for (role of user.roles; track role) {
+                <span
+                  class="badge me-2"
+                  [class.text-bg-danger]="role === 'admin'"
+                  [class.text-bg-primary]="role === 'user'"
+                >
+                  {{ role }}
+                </span>
+              }
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="text-center text-muted">Aucun utilisateur trouvé.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

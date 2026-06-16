@@ -5,6 +5,10 @@ import { Component, input, output } from '@angular/core';
   imports: [],
   template: `
     <div class="d-flex align-items-center gap-2">
+      <button class="btn btn-outline-primary" (click)="first.emit()" [disabled]="page() === 1">
+        <i class="bi bi-chevron-double-left"></i>
+      </button>
+
       <button class="btn btn-outline-primary" (click)="previous.emit()" [disabled]="page() === 1">
         <i class="bi bi-arrow-left-circle-fill"></i>
       </button>
@@ -18,6 +22,14 @@ import { Component, input, output } from '@angular/core';
       >
         <i class="bi bi-arrow-right-circle-fill"></i>
       </button>
+
+      <button
+        class="btn btn-outline-primary"
+        (click)="last.emit()"
+        [disabled]="page() === totalPages()"
+      >
+        <i class="bi bi-chevron-double-right"></i>
+      </button>
     </div>
   `,
 })
@@ -27,4 +39,7 @@ export class TaskPagination {
 
   previous = output<void>();
   next = output<void>();
+
+  first = output<void>();
+  last = output<void>();
 }
