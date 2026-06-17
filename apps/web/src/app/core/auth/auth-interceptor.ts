@@ -1,7 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from './auth-service';
-import { from, switchMap } from 'rxjs';
+import { catchError, from, switchMap, throwError } from 'rxjs';
 import { keycloak } from './keycloak.config';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
@@ -22,6 +22,13 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       });
 
       return next(clonedRequest);
+    }),
+    catchError((error) => {
+      if (error.status === 401) {
+        authService.logout();
+      }
+
+      return throwError(() => error);
     }),
   );
 };

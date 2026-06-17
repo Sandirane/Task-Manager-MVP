@@ -51,6 +51,8 @@ const getAllTasks = async () => {
             updatedAt: true,
             dueDate: true,
             userId: true,
+            username: true,
+            email: true,
         },
     });
 };

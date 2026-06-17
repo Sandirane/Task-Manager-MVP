@@ -10,4 +10,6 @@ export interface Task {
   createdAt: string;
   updatedAt: string;
   userId: string;
+  username: string;
+  email: string;
 }

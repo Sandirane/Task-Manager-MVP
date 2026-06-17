@@ -28,7 +28,7 @@ export class AdminTasks {
       const content = `
       ${task.title}
       ${task.description}
-      ${task.userId}
+      ${task.username}
       `.toLowerCase();
 
       return content.includes(query);

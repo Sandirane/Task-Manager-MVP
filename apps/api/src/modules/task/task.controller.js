@@ -37,7 +37,8 @@ const createTask = async (req, res, next) => {
     const task = await taskService.createTask({
       ...validatedData,
       userId: req.user.id,
-      //userId: req.user.sub,
+      username: req.user.username,
+      email: req.user.email
     });
 
     res.status(201).json(task);

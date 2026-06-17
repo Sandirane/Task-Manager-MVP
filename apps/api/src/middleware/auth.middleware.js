@@ -45,7 +45,7 @@ const authMiddleware = (req, res, next) => {
 
         const allRoles = [...realmRoles, ...clientRoles];
         
-        console.log("Rôles extraits du token :", allRoles);
+        //console.log("Rôles extraits du token :", allRoles);
         req.user = {
           id: decoded.sub,
           email: decoded.email,

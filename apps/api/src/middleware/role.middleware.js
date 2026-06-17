@@ -1,7 +1,7 @@
 const roleMiddleware = (...allowedRoles) => {
     return (req, res, next) => { 
-        console.log("Rôles requis par la route :", allowedRoles);
-        console.log("Rôles reçus dans req.user :", req.user?.roles);
+        //console.log("Rôles requis par la route :", allowedRoles);
+        //console.log("Rôles reçus dans req.user :", req.user?.roles);
 
         const userRoles = req.user?.roles || [];
 

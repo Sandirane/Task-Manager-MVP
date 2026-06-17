@@ -13,8 +13,20 @@ export async function initializeKeycloak() {
     pkceMethod: 'S256',
   });
 
-  console.log('Keycloak initialized');
-  console.log('Authenticated:', authenticated);
+  //console.log('Keycloak initialized');
+  //console.log('Authenticated:', authenticated);
+
+  keycloak.onTokenExpired = async () => {
+    //console.log('Token expiré');
+
+    try {
+      await keycloak.updateToken(30);
+    } catch {
+      await keycloak.logout({
+        redirectUri: window.location.origin,
+      });
+    }
+  };
 
   return authenticated;
 }

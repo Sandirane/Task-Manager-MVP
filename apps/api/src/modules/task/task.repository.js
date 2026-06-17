@@ -19,6 +19,8 @@ const findById = async (id, userId) => {
 };
 
 const create = async (data) => {
+
+  //console.log(data);
   return prisma.task.create({
     data,
   });
