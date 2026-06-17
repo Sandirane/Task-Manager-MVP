@@ -1,1 +1,25 @@
-<p>ai-dashboard works!</p>
+<div class="container">
+    AI help
+  <textarea
+    class="form-control"
+    rows="5"
+    [value]="question()"
+    (input)="question.set($any($event.target).value)"
+  ></textarea>
+
+  <button class="btn btn-primary mt-3" (click)="analyze()">Analyser</button>
+
+  @if (loading()) {
+    <div class="mt-4">
+      <div class="spinner-border"></div>
+    </div>
+  }
+
+  @if (answer()) {
+    <div class="card mt-4">
+      <div class="card-body">
+        {{ answer() }}
+      </div>
+    </div>
+  }
+</div>

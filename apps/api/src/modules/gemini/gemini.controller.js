@@ -3,14 +3,14 @@ const { analyzeSchema } = require("./gemini.validation");
 
 const analyze = async (req, res, next) => {
     try {
+        const { question } = analyzeSchema.parse(req.body);
 
-        const { question } =
-            analyzeSchema.parse(req.body);
+        const answer = await geminiService.analyze(
+            req.body.question,
+            req.user
+        );
 
-        const answer =
-            await geminiService.analyze(question);
-
-        res.json({
+        return res.status(200).json({
             answer,
         });
 

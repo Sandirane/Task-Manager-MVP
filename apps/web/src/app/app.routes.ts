@@ -16,6 +16,11 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadChildren: () => import('./features/private/private.routes').then((m) => m.PRIVATE_ROUTES),
   },
+  {
+    path: 'ai',
+    loadComponent: () =>
+      import('./features/private/ai/pages/ai-dashboard/ai-dashboard').then((m) => m.AiDashboard),
+  },
 
   {
     path: 'unauthorized',
