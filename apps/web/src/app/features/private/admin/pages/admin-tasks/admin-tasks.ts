@@ -1,12 +1,14 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { AdminService } from '../../services/admin.service';
 import { ConfirmModal } from '@shared/ui/confirm-modal/confirm-modal';
 import { AdminTable } from '../../components/admin-table/admin-table';
+import { AdminFilter } from '../../components/admin-filter/admin-filter';
+import { AdminPagination } from '../../components/admin-pagination/admin-pagination';
 
 @Component({
   selector: 'app-admin-tasks',
-  imports: [ConfirmModal, AdminTable],
+  imports: [ConfirmModal, AdminTable, AdminFilter, AdminPagination],
   templateUrl: './admin-tasks.html',
   styleUrl: './admin-tasks.css',
 })
@@ -26,6 +28,15 @@ export class AdminTasks {
   tasksResource = rxResource({
     stream: () => this.adminService.getTasks(),
   });
+
+  constructor() {
+    effect(() => {
+      this.search();
+      this.sortDirection();
+      this.pageSize();
+      this.page.set(1);
+    });
+  }
 
   filteredTasks = computed(() => {
     const query = this.search().toLowerCase();
@@ -55,29 +66,6 @@ export class AdminTasks {
     return Math.ceil(this.filteredTasks().length / this.pageSize()) || 1;
   });
 
-  onSearch(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.search.set(input.value);
-    this.page.set(1);
-  }
-
-  toggleSort() {
-    this.sortDirection.update((d) => (d === 'asc' ? 'desc' : 'asc'));
-    this.page.set(1);
-  }
-
-  onPageSizeChange(event: Event) {
-    const select = event.target as HTMLSelectElement;
-    this.pageSize.set(Number(select.value));
-    this.page.set(1);
-  }
-
-  goToPage(p: number) {
-    if (p >= 1 && p <= this.totalPages()) {
-      this.page.set(p);
-    }
-  }
-
   openDeleteConfirmation(id: string): void {
     this.taskIdToDelete.set(id);
     this.isModalOpen.set(true);
@@ -97,9 +85,7 @@ export class AdminTasks {
         this.closeModal();
         this.tasksResource.reload();
       },
-      error: () => {
-        this.closeModal();
-      },
+      error: () => this.closeModal(),
     });
   }
 }

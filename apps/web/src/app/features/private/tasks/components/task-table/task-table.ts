@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { Task } from '../../models/task';
 import { RouterLink } from '@angular/router';
 import { TaskStatus, TaskPriority } from '../../models/task-enum';
@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
 export class TaskTable {
   tasks = input.required<Task[]>();
   delete = output<string>();
+  selectedTask = signal<Task | null>(null);
 
   statusClass(status: TaskStatus): string {
     switch (status) {
@@ -38,5 +39,13 @@ export class TaskTable {
       default:
         return 'bg-light text-dark border';
     }
+  }
+
+  openTaskDetails(task: Task): void {
+    this.selectedTask.set(task);
+  }
+
+  closeModal(): void {
+    this.selectedTask.set(null);
   }
 }
