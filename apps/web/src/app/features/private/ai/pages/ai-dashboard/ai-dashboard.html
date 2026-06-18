@@ -1,25 +1,57 @@
-<div class="container">
-    AI help
-  <textarea
-    class="form-control"
-    rows="5"
-    [value]="question()"
-    (input)="question.set($any($event.target).value)"
-  ></textarea>
+<nav class="topbar py-3 mb-4 border-bottom bg-white">
+  <div class="container d-flex justify-content-between align-items-center">
+    <h4 class="mb-0 fw-bold text-dark">
+      <i class="bi bi-robot text-primary me-2"></i>Mon assistant
+    </h4>
+  </div>
+</nav>
 
-  <button class="btn btn-primary mt-3" (click)="analyze()">Analyser</button>
-
-  @if (loading()) {
-    <div class="mt-4">
-      <div class="spinner-border"></div>
-    </div>
-  }
-
-  @if (answer()) {
-    <div class="card mt-4">
-      <div class="card-body">
-        {{ answer() }}
+<div class="container py-2 d-flex flex-column">
+  <div class="flex-grow-1 overflow-y-auto mb-3 p-3 border rounded-3 bg-light-subtle shadow-inner">
+    @if (messages().length === 0) {
+      <div class="text-center text-muted my-5 py-5">
+        <div
+          class="bg-primary-subtle text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow-sm"
+          style="width: 64px; height: 64px"
+        >
+          <i class="bi bi-chat-dots fs-3"></i>
+        </div>
+        <h5 class="fw-bold text-dark">Comment puis-je vous aider ?</h5>
+        <p class="small mx-auto" style="max-width: 400px">
+          Posez votre première question pour démarrer l'analyse ou l'organisation de vos tâches.
+        </p>
       </div>
-    </div>
-  }
+    }
+
+    @for (msg of messages(); track msg.timestamp) {
+      <app-ai-answer [msg]="msg" />
+    }
+
+    @if (loading()) {
+      <div class="d-flex justify-content-start mb-3 animate-pulse">
+        <div class="card bg-white border-0 shadow-sm" style="border-radius: 16px 16px 16px 0px">
+          <div class="card-body py-2.5 px-3 d-flex align-items-center gap-2">
+            <div
+              class="spinner-grow spinner-grow-sm text-primary"
+              style="width: 8px; height: 8px"
+              role="status"
+            ></div>
+            <div
+              class="spinner-grow spinner-grow-sm text-primary"
+              style="width: 8px; height: 8px; animation-delay: 0.2s"
+              role="status"
+            ></div>
+            <div
+              class="spinner-grow spinner-grow-sm text-primary"
+              style="width: 8px; height: 8px; animation-delay: 0.4s"
+              role="status"
+            ></div>
+            <span class="text-muted small ms-1">L'assistant réfléchit...</span>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <app-ai-form [loading]="loading()" (sendQuestion)="onNewQuestion($event)" />
 </div>

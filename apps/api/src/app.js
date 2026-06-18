@@ -17,7 +17,7 @@ app.get("/health", (req, res) => {
 
 app.use("/tasks", taskRoutes);
 app.use("/admin", adminRoutes);
-app.use("/api/ai", geminiRoutes);
+app.use("/assistant", geminiRoutes);
 app.use(errorMiddleware);
 
 module.exports = app;

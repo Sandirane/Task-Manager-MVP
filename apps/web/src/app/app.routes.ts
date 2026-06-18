@@ -17,12 +17,6 @@ export const routes: Routes = [
     loadChildren: () => import('./features/private/private.routes').then((m) => m.PRIVATE_ROUTES),
   },
   {
-    path: 'ai',
-    loadComponent: () =>
-      import('./features/private/ai/pages/ai-dashboard/ai-dashboard').then((m) => m.AiDashboard),
-  },
-
-  {
     path: 'unauthorized',
     loadComponent: () =>
       import('./features/public/unauthorized/unauthorized').then((m) => m.Unauthorized),

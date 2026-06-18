@@ -1,53 +1,83 @@
-<div class="table-responsive">
-  <table class="table task-table align-middle">
-    <thead>
+<div class="table-responsive shadow-sm rounded-3 border bg-white">
+  <table class="table align-middle mb-0">
+    <thead class="table-light text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px">
       <tr>
-        <th>Titre</th>
-        <th>Description</th>
-        <th>Mis à jour le</th>
-        <th>Date d'échéance</th>
-        <th>Priorité</th>
-        <th>Status</th>
-        <th>Actions</th>
+        <th class="ps-4 py-3">Tâche & Description</th>
+        <th class="py-3">Mis à jour le</th>
+        <th class="py-3">Date d'échéance</th>
+        <th class="py-3">Priorité</th>
+        <th class="py-3">Statut</th>
+        <th class="pe-4 py-3 text-end" style="width: 120px">Actions</th>
       </tr>
     </thead>
 
     <tbody>
       @for (task of tasks(); track task.id) {
-        <tr>
-          <td>{{ task.title }}</td>
-
-          <td>
-            {{ task.description }}
+        <tr class="hover-row">
+          <td class="ps-4 py-3">
+            <div class="fw-semibold text-dark mb-0 fs-6 text-truncate" style="max-width: 250px" [title]="task.title">
+              {{ task.title }}
+            </div>
+            @if (task.description) {
+              <div class="text-muted small text-truncate" style="max-width: 300px" [title]="task.description">
+                {{ task.description }}
+              </div>
+            } @else {
+              <div class="text-muted small fst-italic">Aucune description</div>
+            }
           </td>
-          <td>
+
+          <td class="py-3 text-secondary small">
             {{ task.updatedAt | date: 'dd/MM/yyyy' }}
           </td>
 
-          <td>
-            {{ task.dueDate | date: 'dd/MM/yyyy' }}
+          <td class="py-3 text-secondary small">
+            @if (task.dueDate) {
+              {{ task.dueDate | date: 'dd/MM/yyyy' }}
+            } @else {
+              <span class="text-muted opacity-50">-</span>
+            }
           </td>
 
-          <td>
-            <span class="badge" [class]="priorityClass(task.priority)">
+          <td class="py-3">
+            <span class="badge rounded-pill px-2.5 py-1.5 fw-medium" [class]="priorityClass(task.priority)">
               {{ task.priority }}
             </span>
           </td>
 
-          <td>
-            <span class="badge" [class]="statusClass(task.status)">
-              {{ task.status }}
+          <td class="py-3">
+            <span class="badge rounded-pill px-2.5 py-1.5 fw-medium" [class]="statusClass(task.status)">
+              ● {{ task.status }}
             </span>
           </td>
 
-          <td>
-            <button class="btn btn-sm btn-warning me-2" [routerLink]="['/tasks', task.id, 'edit']">
-              <i class="bi bi-pencil-square"></i>
-            </button>
+          <td class="pe-4 py-3 text-end">
+            <div class="d-inline-flex gap-1">
+              <button 
+                class="btn btn-sm btn-outline-warning border-0 rounded-2 px-2.5" 
+                [routerLink]="['/tasks', task.id, 'edit']"
+                title="Modifier"
+              >
+                <i class="bi bi-pencil-square"></i>
+              </button>
 
-            <button class="btn btn-sm btn-danger" (click)="delete.emit(task.id)">
-              <i class="bi bi-trash"></i>
-            </button>
+              <button 
+                class="btn btn-sm btn-outline-danger border-0 rounded-2 px-2.5" 
+                (click)="delete.emit(task.id)"
+                title="Supprimer"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="6" class="text-center py-5 text-muted bg-light-subtle">
+            <div class="my-2">
+              <i class="bi bi-clipboard fs-2 text-muted opacity-50"></i>
+              <p class="mb-0 mt-2 fw-medium">Aucune tâche disponible</p>
+            </div>
           </td>
         </tr>
       }

@@ -10,7 +10,7 @@ export class AiService {
   private api = inject(ApiService);
 
   analyze(data: AiRequest) {
-    return this.api.post<AiResponse>('api/ai/analyze', data);
+    return this.api.post<AiResponse>('assistant/analyze', data);
   }
   
 }

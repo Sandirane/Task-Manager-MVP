@@ -31,6 +31,11 @@ export class NavbarPrivate {
       icon: 'card-list',
     },
     {
+      title: 'Assistant',
+      route: '/assistant',
+      icon: 'robot',
+    },
+    {
       title: 'Profil',
       route: '/profile',
       icon: 'person',

@@ -12,38 +12,31 @@ import { DatePipe } from '@angular/common';
 })
 export class TaskTable {
   tasks = input.required<Task[]>();
-
   delete = output<string>();
 
   statusClass(status: TaskStatus): string {
     switch (status) {
       case TaskStatus.TODO:
-        return 'text-bg-secondary';
-
+        return 'bg-secondary-subtle text-secondary';
       case TaskStatus.IN_PROGRESS:
-        return 'text-bg-warning';
-
+        return 'bg-warning-subtle text-warning';
       case TaskStatus.DONE:
-        return 'text-bg-success';
-
+        return 'bg-success-subtle text-success';
       default:
-        return 'text-bg-primary';
+        return 'bg-primary-subtle text-primary';
     }
   }
 
   priorityClass(priority: TaskPriority): string {
     switch (priority) {
       case TaskPriority.LOW:
-        return 'text-bg-secondary';
-
+        return 'bg-secondary-subtle text-secondary border';
       case TaskPriority.MEDIUM:
-        return 'text-bg-warning';
-
+        return 'bg-info-subtle text-info';
       case TaskPriority.HIGH:
-        return 'text-bg-danger';
-
+        return 'bg-danger-subtle text-danger';
       default:
-        return 'text-bg-primary';
+        return 'bg-light text-dark border';
     }
   }
 }

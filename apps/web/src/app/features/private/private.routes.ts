@@ -16,4 +16,8 @@ export const PRIVATE_ROUTES: Routes = [
     canActivate: [adminGuard],
     loadChildren: () => import('./admin/pages/admin.routes').then((m) => m.ADMIN_ROUTES),
   },
+  {
+    path: 'assistant',
+    loadComponent: () => import('./ai/pages/ai-dashboard/ai-dashboard').then((m) => m.AiDashboard),
+  },
 ];
