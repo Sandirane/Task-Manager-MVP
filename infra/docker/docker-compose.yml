@@ -25,6 +25,8 @@ services:
       - "8080:8080"
     depends_on:
       - postgres
+    volumes:
+      - ./mon-theme:/opt/keycloak/themes/mon-theme
 
   api:
     build: ../../apps/api

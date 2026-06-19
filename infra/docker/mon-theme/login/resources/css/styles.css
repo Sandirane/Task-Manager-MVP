@@ -1,0 +1,117 @@
+html, body, .login-pf body {
+    background-color: #f8fafc !important;  
+    background-image: none !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    color: #1e293b;
+}
+
+#kc-page-title {
+    font-size: 2.25rem;          
+    font-weight: 800;            
+    letter-spacing: -0.05em;     
+    color: #0f172a;             
+    text-align: center;          
+    margin-top: 0.5rem;
+    margin-bottom: 2.5rem;        
+    text-transform: capitalize;   
+}
+ 
+#kc-header-wrapper {
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #475569;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+ 
+#kc-container-wrapper {
+    width: 100%;
+    max-width: 420px;
+    padding: 2rem;
+}
+
+.login-pf-page .card-pf {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    border: 1px solid #e2e8f0;
+    padding: 2.5rem;
+}
+ 
+#kc-page-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0f172a;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+ 
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #1e293b;
+    background-color: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #6366f1;  
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+    outline: 0;
+}
+ 
+.control-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #475569;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+ 
+.btn-primary {
+    color: #fff;
+    background-color: #6366f1 !important;
+    border-color: #6366f1 !important;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    width: 100%;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary:hover {
+    background-color: #4f46e5 !important;
+    border-color: #4f46e5 !important;
+}
+ 
+#kc-registration, #kc-login-fork-choices {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+}
+
+a {
+    color: #6366f1;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #4f46e5;
+}
