@@ -10,16 +10,10 @@ export const keycloak = new Keycloak({
 export async function initializeKeycloak() {
   const authenticated = await keycloak.init({
     onLoad: 'check-sso',
-    pkceMethod: 'S256',
-    //checkLoginIframe: false,
+    pkceMethod: 'S256', 
   });
 
-  //console.log('Keycloak initialized');
-  //console.log('Authenticated:', authenticated);
-
   keycloak.onTokenExpired = async () => {
-    //console.log('Token expiré');
-
     try {
       await keycloak.updateToken(30);
     } catch {

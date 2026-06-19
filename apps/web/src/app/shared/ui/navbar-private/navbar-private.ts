@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '@core/auth/auth-service';
+import { AlertService } from '@core/services/alert.service';
 
 export interface MenuAction {
   title: string;
@@ -16,6 +17,7 @@ export interface MenuAction {
 })
 export class NavbarPrivate {
   protected auth = inject(AuthService);
+  private alertService = inject(AlertService);
 
   navbarCollapsed = signal(false);
 
@@ -47,6 +49,11 @@ export class NavbarPrivate {
   }
 
   logout(): void {
-    this.auth.logout();
+    this.alertService.show('Déconnexion en cours...', 'info');
+
+    setTimeout(() => {
+      this.auth.logout();
+    }, 1000);
   }
+  
 }
