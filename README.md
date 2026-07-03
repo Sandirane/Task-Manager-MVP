@@ -22,6 +22,33 @@ The project includes:
 
 # Features
 
+# Application Preview
+
+Here are some screenshots of the Task-Manager-MVP in action:
+
+### Login with Keycloak
+![Login Screen](./docs/images/login.png)
+
+### Home (Logged out)
+![Home page user logged out](./docs/images/home_page.png)
+
+### Home (Logged in)
+![Home page user logged in](./docs/images/home_page_connect.png)
+
+### User Tasks
+![Tasks page](./docs/images/tasks_page.png)
+
+### AI page
+![AI page](./docs/images/gemini_page.png)
+
+### Gemini AI Chat
+![User chat with Gemini](./docs/images/gemini_chat_page.png)
+
+### Gemini AI Chat Results
+![Gemini chat results](./docs/images/gemini_chat_page_result.png)
+
+---
+
 ### Task Management
 
 * Create tasks
@@ -62,12 +89,6 @@ The project includes:
 * PostgreSQL database
 * Keycloak server
 * API server
-
----
-
-# Application Preview
-
-(Comming soon)
 
 ---
 
@@ -196,6 +217,49 @@ git clone https://github.com/Sandirane/Task-Manager-MVP.git
 cd Task-Manager-MVP
 ```
 
+## Environment Variables
+This project requires environment variables to run.
+
+You already have an example file provided (.env.exemple.txt).
+
+Step 1 — Create your .env file
+
+Copy the example file and rename it:
+
+```bash
+cp .env.exemple.txt .env
+```
+Step 2 — Configure your variables
+
+Copy `env.exemple.txt` and rename it to `.env`, then fill in the variables:
+
+```bash
+# Database
+DATABASE_URL=""
+POSTGRES_USER=""
+POSTGRES_PASSWORD=""
+POSTGRES_DB=""
+
+# API Server
+PORT=""
+SERVER_URL=""
+
+# API IA
+GEMINI_API_KEY=""
+GEMINI_MODEL=""
+
+# Keycloak Configuration 
+KEYCLOAK_ADMIN=""
+KEYCLOAK_ADMIN_PASSWORD=""
+KEYCLOAK_URL=""
+KEYCLOAK_REALM=""
+KEYCLOAK_CLIENT_ID=""
+KEYCLOAK_CLIENT_SECRET=""
+
+# Express Session Secret
+SESSION_SECRET=""
+```
+
 ---
 
 ## Start services
@@ -208,18 +272,15 @@ docker compose up --build
 
 # Access URLs
 
-| Service  | URL                   |
-| -------- | --------------------- |
-| Frontend | http://localhost:4200 |
-| API      | http://localhost:3000 |
-| Keycloak | http://localhost:8080 |
-
+| Service  | URL                                            |
+| -------- | ---------------------------------------------- |
+| Frontend | [http://localhost:4200](http://localhost:4200) |
+| API      | [http://localhost:3000](http://localhost:3000) |
+| Keycloak | [http://localhost:8080](http://localhost:8080) |
+ 
 ---
 
 # Author
 
-Created by Sandirane
-
-GitHub:
-
-https://github.com/Sandirane
+Created by **Sandirane**  
+[GitHub Profile](https://github.com/Sandirane)
