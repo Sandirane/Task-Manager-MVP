@@ -4,6 +4,14 @@ A full-stack task management application built with Angular, Node.js, PostgreSQL
 
 ---
 
+# Demo Video
+
+🎥 Full application demonstration:
+
+[Watch the demo on YouTube](https://www.youtube.com/watch?v=MP10_JE4XEY)
+
+---
+
 # Overview
 
 Task-Manager-MVP is a modern task management application designed with a clean architecture and secure authentication.
